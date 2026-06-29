@@ -16,7 +16,7 @@ config FTS_FOD_AREA_REPORT
 
           If unsure, say N.
 
-config TOUCHSCREEN_ST_DEBUG_FS
+config FTS_U2
 	tristate "St core driver module"
 	depends on TOUCHSCREEN_ST_FTS_V521
 	help
