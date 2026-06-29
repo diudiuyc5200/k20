@@ -18,6 +18,11 @@
 #include "sm8150-sde-display.dtsi"
 #include "sm8150-thermal-overlay.dtsi"
 
+&qupv3_se4_i2c {
+#include "smb1390.dtsi"
+#include "smb1355.dtsi"
+};
+
 &qupv3_se12_2uart {
 	status = "ok";
 };
@@ -49,6 +54,7 @@
 			     &usb2_id_det_default
 			     &usb2_vbus_boost_default>;
 	};
+
 };
 
 &qupv3_se13_4uart {
@@ -80,7 +86,6 @@
 			debounce-interval = <15>;
 			linux,can-disable;
 		};
-
 	};
 
 	ext_5v_boost: ext_5v_boost {
@@ -95,21 +100,21 @@
 		pinctrl-0 = <&otg_vbus_boost_default>;
 	};
 
-	qcom,qbt1000 {
+	qcom_qbt1000: qcom,qbt1000 {
 		compatible = "qcom,qbt1000";
 		clock-names = "core", "iface";
 		clock-frequency = <25000000>;
-/*		qcom,ipc-gpio = <&tlmm 118 0>; */
+		qcom,ipc-gpio = <&tlmm 118 0>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&key_home_default>;
 		qcom,finger-detect-gpio = <&pm8150_gpios 1 0>;
-		status = "disabled";
 	};
 
-	wdog: qcom,wdt@17c10000 {
-		qcom,bark-time = <20000>;
-		qcom,pet-time = <15000>;
+	simtray {
+		compatible = "xiaomi,simtray-status";
+		status-gpio = <&tlmm 112 0x00>;
 	};
 };
-
 
 &dsi_sharp_4k_dsc_cmd {
 	qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
@@ -213,21 +218,9 @@
 	qcom,platform-reset-gpio = <&tlmm 6 0>;
 };
 
-&dsi_sharp_1080_cmd {
-       qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
-       qcom,mdss-dsi-bl-pmic-control-type = "bl_ctrl_wled";
-       qcom,mdss-dsi-bl-min-level = <1>;
-       qcom,mdss-dsi-bl-max-level = <4095>;
-       qcom,mdss-dsi-mode-sel-gpio-state = "dual_port";
-       qcom,panel-mode-gpio = <&tlmm 7 0>;
-       qcom,platform-te-gpio = <&tlmm 8 0>;
-       qcom,platform-reset-gpio = <&tlmm 6 0>;
-};
-
 &dsi_nt35695b_truly_fhd_cmd {
 	qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
 	qcom,mdss-dsi-bl-pmic-control-type = "bl_ctrl_wled";
-	qcom,mdss-dsi-sec-bl-pmic-control-type = "bl_ctrl_external";
 	qcom,mdss-dsi-bl-min-level = <1>;
 	qcom,mdss-dsi-bl-max-level = <4095>;
 	qcom,mdss-dsi-mode-sel-gpio-state = "single_port";
@@ -239,79 +232,23 @@
 &dsi_nt35695b_truly_fhd_video {
 	qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
 	qcom,mdss-dsi-bl-pmic-control-type = "bl_ctrl_wled";
-	qcom,mdss-dsi-sec-bl-pmic-control-type = "bl_ctrl_external";
 	qcom,mdss-dsi-bl-min-level = <1>;
 	qcom,mdss-dsi-bl-max-level = <4095>;
 	qcom,mdss-dsi-mode-sel-gpio-state = "single_port";
-	//qcom,panel-mode-gpio = <&tlmm 7 0>;
-	qcom,platform-te-gpio = <&tlmm 8 0>;
-	qcom,platform-reset-gpio = <&tlmm 6 0>;
-};
-
-&dsi_ss_notch_fhd_ea8074_cmd {
-	qcom,panel-supply-entries = <&dsi_amoled_panel_pwr_supply>;
-	qcom,mdss-dsi-bl-pmic-control-type = "bl_ctrl_dcs";
-	qcom,mdss-dsi-bl-min-level = <2>;
-	qcom,mdss-dsi-bl-max-level = <1023>;
-	qcom,mdss-dsi-mode-sel-gpio-state = "single_port";
-	//qcom,panel-mode-gpio = <&tlmm 7 0>;
-	qcom,platform-te-gpio = <&tlmm 8 0>;
-	qcom,platform-reset-gpio = <&tlmm 6 0>;
-};
-
-&dsi_samsung_fhd_ea8076_f1mp_cmd {
-	qcom,panel-supply-entries = <&dsi_amoled_panel_pwr_supply>;
-	qcom,mdss-dsi-bl-pmic-control-type = "bl_ctrl_dcs";
-	qcom,mdss-dsi-bl-min-level = <2>;
-	qcom,mdss-dsi-bl-max-level = <2047>;
-	qcom,mdss-dsi-mode-sel-gpio-state = "single_port";
-	//qcom,panel-mode-gpio = <&tlmm 7 0>;
-	qcom,platform-te-gpio = <&tlmm 8 0>;
-	qcom,platform-reset-gpio = <&tlmm 6 0>;
-};
-
-&dsi_samsung_fhd_ea8076_f1p2_2_cmd {
-	qcom,panel-supply-entries = <&dsi_amoled_panel_pwr_supply>;
-	qcom,mdss-dsi-bl-pmic-control-type = "bl_ctrl_dcs";
-	qcom,mdss-dsi-bl-min-level = <2>;
-	qcom,mdss-dsi-bl-max-level = <2047>;
-	qcom,mdss-dsi-mode-sel-gpio-state = "single_port";
-	//qcom,panel-mode-gpio = <&tlmm 7 0>;
-	qcom,platform-te-gpio = <&tlmm 8 0>;
-	qcom,platform-reset-gpio = <&tlmm 6 0>;
-};
-
-&dsi_samsung_fhd_ea8076_f1p2_cmd {
-	qcom,panel-supply-entries = <&dsi_amoled_panel_pwr_supply>;
-	qcom,mdss-dsi-bl-pmic-control-type = "bl_ctrl_dcs";
-	qcom,mdss-dsi-bl-min-level = <2>;
-	qcom,mdss-dsi-bl-max-level = <2047>;
-	qcom,mdss-dsi-mode-sel-gpio-state = "single_port";
-	//qcom,panel-mode-gpio = <&tlmm 7 0>;
-	qcom,platform-te-gpio = <&tlmm 8 0>;
-	qcom,platform-reset-gpio = <&tlmm 6 0>;
-};
-
-&dsi_tianma_fhd_nt36672a_video {
-	qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
-	qcom,mdss-dsi-bl-pmic-control-type = "bl_ctrl_wled";
-	qcom,mdss-dsi-bl-min-level = <2>;
-	qcom,mdss-dsi-bl-max-level = <4095>;
-	qcom,mdss-dsi-mode-sel-gpio-state = "single_port";
 	qcom,panel-mode-gpio = <&tlmm 7 0>;
-//	qcom,platform-te-gpio = <&tlmm 8 0>;
+	qcom,platform-te-gpio = <&tlmm 8 0>;
 	qcom,platform-reset-gpio = <&tlmm 6 0>;
 };
 
-&dsi_visionox_fhd_r66456_f11_cmd {
-	qcom,panel-supply-entries = <&dsi_amoled_panel_pwr_external_supply>;
+&dsi_samsung_fhd_ea8076_f1s_cmd {
+	qcom,panel-supply-entries = <&dsi_amoled_panel_pwr_supply>;
 	qcom,mdss-dsi-bl-pmic-control-type = "bl_ctrl_dcs";
-	qcom,mdss-dsi-bl-min-level = <256>;
-	qcom,mdss-dsi-bl-max-level = <4095>;
+	qcom,mdss-dsi-bl-min-level = <2>;
+	qcom,mdss-dsi-bl-max-level = <2047>;
 	qcom,mdss-dsi-mode-sel-gpio-state = "single_port";
 	//qcom,panel-mode-gpio = <&tlmm 7 0>;
 	qcom,platform-te-gpio = <&tlmm 8 0>;
-	qcom,platform-reset-gpio = <&tlmm 6 0>;
+	qcom,platform-reset-gpio = <&tlmm 11 0>;
 };
 
 &qupv3_se9_i2c {
@@ -320,7 +257,7 @@
 		compatible = "qcom,nq-nci";
 		reg = <0x28>;
 		qcom,nq-irq = <&tlmm 47 0x00>;
-		qcom,nq-ven = <&tlmm 103 0x00>;
+		qcom,nq-ven = <&tlmm 36 0x00>;
 		qcom,nq-firm = <&tlmm 48 0x00>;
 		qcom,nq-clkreq = <&tlmm 113 0x00>;
 		//qcom,nq-esepwr = <&tlmm 42 0x00>;
@@ -333,10 +270,6 @@
 		pinctrl-1 = <&nfc_int_suspend &nfc_enable_suspend
 					&nfc_clk_req_suspend>;
 	};
-};
-
-&dsi_nt35695b_truly_fhd_video_display {
-	qcom,dsi-display-active;
 };
 
 &ufsphy_mem {
@@ -369,6 +302,31 @@
 	status = "ok";
 };
 
+&spmi_debug_bus {
+	status = "ok";
+};
+
+&pm8150l_wled {
+	qcom,string-cfg= <7>;
+        qcom,leds-per-string = <6>;
+	status = "ok";
+};
+
+&pm8150l_lcdb {
+	status = "ok";
+};
+
+&pm8150b_fg {
+	qcom,battery-data = <&mtp_batterydata>;
+	/* ESR fast calibration */
+	qcom,fg-esr-timer-chg-fast = <0 7>;
+	qcom,fg-esr-timer-dischg-fast = <0 7>;
+	qcom,fg-esr-timer-chg-slow = <0 96>;
+	qcom,fg-esr-timer-dischg-slow = <0 96>;
+	qcom,fg-esr-cal-soc-thresh = <26 230>;
+	qcom,fg-esr-cal-temp-thresh = <10 40>;
+};
+
 &sdhc_2 {
 	vdd-supply = <&pm8150l_l9>;
 	qcom,vdd-voltage-level = <2950000 2960000>;
@@ -384,30 +342,7 @@
 
 	cd-gpios = <&tlmm 96 GPIO_ACTIVE_LOW>;
 
-	status = "disabled";
-};
-
-&spmi_debug_bus {
 	status = "ok";
-};
-
-&pm8150l_wled {
-	qcom,string-cfg= <7>;
-	qcom,leds-per-string = <6>;
-	status = "ok";
-};
-
-&pm8150l_lcdb {
-	status = "ok";
-};
-
-&pm8150b_charger {
-	io-channels = <&pm8150b_vadc ADC_USB_IN_V_16>,
-		      <&pm8150b_vadc ADC_USB_IN_I>,
-		      <&pm8150b_vadc ADC_CHG_TEMP>;
-	io-channel-names = "usb_in_voltage",
-			   "usb_in_current",
-			   "chg_temp";
 };
 
 &wil6210 {
@@ -418,21 +353,56 @@
 	mhi,fw-name = "debug.mbn";
 };
 
-&pcie0 {
-	qcom,no-l1-supported;
+&pm8150b_charger {
+	qcom,sec-charger-config = <3>;
+	io-channels = <&pm8150b_vadc ADC_MID_CHG_DIV6>,
+		      <&pm8150b_vadc ADC_USB_IN_I>,
+		      <&pm8150b_vadc ADC_SBUx>,
+		      <&pm8150b_vadc ADC_VPH_PWR>,
+		      <&pm8150b_vadc ADC_CHG_TEMP>;
+	io-channel-names = "mid_voltage",
+			   "usb_in_current",
+			   "sbux_res",
+			   "vph_voltage",
+			   "chg_temp";
+	qcom,battery-data = <&mtp_batterydata>;
+	qcom,sw-jeita-enable;
+        qcom,wd-bark-time-secs = <16>;
+};
+
+&smb1390 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&smb_stat_default>;
+	status = "ok";
+};
+
+&smb1390_charger {
+	io-channels = <&pm8150b_vadc ADC_AMUX_THM2>;
+	io-channel-names = "cp_die_temp";
+	status = "ok";
 };
 
 &usb1 {
 	extcon = <&extcon_usb1>;
-        status = "ok";
+	status = "ok";
 };
 
 &usb2_phy1 {
-        status = "ok";
+	status = "ok";
 };
 
 &usb_qmp_phy {
-        status = "ok";
+	status = "ok";
+};
+
+&smb1355 {
+	status = "ok";
+};
+
+&smb1355_charger {
+	io-channels = <&pm8150b_vadc ADC_AMUX_THM2>;
+	io-channel-names = "charger_temp";
+	status = "ok";
 };
 
 &reserved_memory {
