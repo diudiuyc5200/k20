@@ -22,8 +22,4 @@ config FTS_U2
 	help
           Say Y here to enable  touch debugfs functionality.
 
-<<<<<<< HEAD
           If unsure, say N.
-=======
-          If unsure, say N.
->>>>>>> ee6340594e47 (treewide: Import XTurbo changes for crux)
