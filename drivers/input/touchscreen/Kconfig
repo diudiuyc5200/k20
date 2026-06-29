@@ -11,9 +11,6 @@ menuconfig INPUT_TOUCHSCREEN
 
 if INPUT_TOUCHSCREEN
 
-source "drivers/input/touchscreen/xiaomi/Kconfig"
-source "drivers/input/touchscreen/goodix_driver_gt9886/Kconfig"
-
 config TOUCHSCREEN_PROPERTIES
 	def_tristate INPUT
 	depends on INPUT
@@ -29,6 +26,9 @@ config TOUCHSCREEN_88PM860X
 
 	  To compile this driver as a module, choose M here: the
 	  module will be called 88pm860x-ts.
+
+source "drivers/input/touchscreen/xiaomi/Kconfig"
+source "drivers/input/touchscreen/goodix_driver_gt9886/Kconfig"
 
 config TOUCHSCREEN_ADS7846
 	tristate "ADS7846/TSC2046/AD7873 and AD(S)7843 based touchscreens"
