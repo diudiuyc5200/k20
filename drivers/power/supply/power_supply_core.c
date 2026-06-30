@@ -60,6 +60,17 @@ static bool __power_supply_is_supplied_by(struct power_supply *supplier,
 	return false;
 }
 
+#ifdef CONFIG_EXT4_FS_ES_BARRIER
+atomic_t batt_percent = ATOMIC_INIT(0);
+static void power_supply_update_batt_percent(struct power_supply *psy)
+{
+	union power_supply_propval ret;
+	if (!power_supply_get_property(psy, POWER_SUPPLY_PROP_CAPACITY, &ret))
+		atomic_set(&batt_percent, ret.intval);
+}
+#endif
+
+
 static int __power_supply_changed_work(struct device *dev, void *data)
 {
 	struct power_supply *psy = data;
@@ -95,6 +106,10 @@ static void power_supply_changed_work(struct work_struct *work)
 		class_for_each_device(power_supply_class, NULL, psy,
 				      __power_supply_changed_work);
 		power_supply_update_leds(psy);
+
+#ifdef CONFIG_EXT4_FS_ES_BARRIER
+		power_supply_update_batt_percent(psy);
+#endif
 
 		atomic_notifier_call_chain(&power_supply_notifier,
 				PSY_EVENT_PROP_CHANGED, psy);
@@ -178,8 +193,8 @@ static int __power_supply_populate_supplied_from(struct device *dev,
 		if (np == epsy->of_node) {
 			dev_info(&psy->dev, "%s: Found supply : %s\n",
 				psy->desc->name, epsy->desc->name);
-			psy->supplied_from[i-1] = (char *)epsy->desc->name;
-			psy->num_supplies++;
+			psy->supplied_from[psy->num_supplies++] =
+				(char *)epsy->desc->name;
 			of_node_put(np);
 			break;
 		}
