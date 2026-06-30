@@ -32,14 +32,15 @@
 #include <linux/debugfs.h>
 #include <linux/version.h>
 #include <linux/input.h>
-#include <linux/mfd/spk-id.h>
-#include "../inc/config.h"
-#include "../inc/tfa98xx.h"
-#include "../inc/tfa.h"
-#include "../inc/tfa_dsp_fw.h"
+#include "config.h"
+#include "tfa98xx.h"
+#include "tfa.h"
+#include "tfa_dsp_fw.h"
 
 /* required for enum tfa9912_irq */
-#include "../inc/tfa98xx_tfafieldnames.h"
+#include "tfa98xx_tfafieldnames.h"
+
+#include "spk-id.h"
 
 #define TFA98XX_VERSION	TFA98XX_API_REV_STR
 
@@ -126,7 +127,7 @@ static const struct tfa98xx_rate rate_to_fssel[] = {
 	{ 48000, 8 },
 };
 
-static int nxp_spk_id_get(struct device_node *np)
+int nxp_spk_id_get(struct device_node *np)
 {
 	int id = VENDOR_ID_UNKNOWN;
 	int state = 3;
@@ -389,6 +390,15 @@ static void tfa98xx_inputdev_unregister(struct tfa98xx *tfa98xx)
 {
 	__tfa98xx_inputdev_check_register(tfa98xx, true);
 }
+
+#ifdef TFA_NON_DSP_SOLUTION
+extern int send_tfa_cal_apr(void *buf, int cmd_size, bool bRead);
+#else
+int send_tfa_cal_apr(void *buf, int cmd_size, bool bRead)
+{
+    return 0;
+}
+#endif
 
 #ifdef CONFIG_DEBUG_FS
 /* OTC reporting
@@ -740,8 +750,6 @@ static ssize_t tfa98xx_dbgfs_fw_state_get(struct file *file,
 
 	return simple_read_from_buffer(user_buf, count, ppos, str, strlen(str));
 }
-
-extern int send_tfa_cal_apr(void *buf, int cmd_size, bool bRead);
 
 static ssize_t tfa98xx_dbgfs_rpc_read(struct file *file,
 				     char __user *user_buf, size_t count,
@@ -3418,8 +3426,6 @@ static int tfa98xx_misc_device_rpc_open(struct inode *inode, struct file *file)
 		return -EINVAL;
 	}
 }
-
-extern int send_tfa_cal_apr(void *buf, int cmd_size, bool bRead);
 
 static ssize_t tfa98xx_misc_device_rpc_read(struct file *file, char __user *user_buf,
 											size_t count, loff_t *ppos)
