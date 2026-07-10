@@ -60,6 +60,8 @@
 
 		qcom,mdss-dsi-panel-fod-dimlayer-enabled;
 
+        qcom,min-refresh-rate = <60>;
+		qcom,max-refresh-rate = <90>;
 		qcom,dispparam-enabled;
 		qcom,mdss-panel-on-dimming-delay = <200>;
 		qcom,mdss-dsi-panel-dc-threshold = <610>;
@@ -177,6 +179,8 @@
 					39 00 00 00 00 00 03 51 00 00
 					39 01 00 00 43 00 02 55 00
 					05 01 00 00 00 00 02 29 00];
+					qcom,mdss-dsi-timing-switch-command = [39 00 00 00 00 00 03 f0 5a 5a 39 00 00 00 00 00 03 fc 5a 5a 39 00 00 00 00 00 02 b0 23 39 00 00 00 00 00 02 d1 2C 39 00 00 00 00 00 0c e9 11 55 a6 75 a3 a9 eb 71 00 1a b8 39 00 00 00 00 00 03 f0 a5 a5 39 01 00 00 00 00 03 fc a5 a5];
+    qcom,mdss-dsi-timing-switch-command-state = "dsi_hs_mode";
 				qcom,mdss-dsi-off-command = [
 					05 01 00 00 00 00 02 28 00
 					05 01 00 00 78 00 02 10 00];
@@ -348,6 +352,8 @@
 					39 00 00 00 00 00 03 51 00 00
 					39 01 00 00 43 00 02 55 00
 					05 01 00 00 00 00 02 29 00];
+					qcom,mdss-dsi-timing-switch-command = [39 00 00 00 00 00 03 f0 5a 5a 39 00 00 00 00 00 03 fc 5a 5a 39 00 00 00 00 00 02 b0 23 39 00 00 00 00 00 02 d1 2C 39 00 00 00 00 00 0c e9 11 55 a6 75 a3 a9 eb 71 00 1a b8 39 00 00 00 00 00 03 f0 a5 a5 39 01 00 00 00 00 03 fc a5 a5];
+    qcom,mdss-dsi-timing-switch-command-state = "dsi_hs_mode";
 				qcom,mdss-dsi-off-command = [
 					05 01 00 00 00 00 02 28 00
 					05 01 00 00 78 00 02 10 00];
@@ -519,6 +525,8 @@
 					39 00 00 00 00 00 03 51 00 00
 					39 01 00 00 43 00 02 55 00
 					05 01 00 00 00 00 02 29 00];
+					qcom,mdss-dsi-timing-switch-command = [39 00 00 00 00 00 03 f0 5a 5a 39 00 00 00 00 00 03 fc 5a 5a 39 00 00 00 00 00 02 b0 23 39 00 00 00 00 00 02 d1 2C 39 00 00 00 00 00 0c e9 11 55 a6 75 a3 a9 eb 71 00 1a b8 39 00 00 00 00 00 03 f0 a5 a5 39 01 00 00 00 00 03 fc a5 a5];
+    qcom,mdss-dsi-timing-switch-command-state = "dsi_hs_mode";
 				qcom,mdss-dsi-off-command = [
 					05 01 00 00 00 00 02 28 00
 					05 01 00 00 78 00 02 10 00];
@@ -690,6 +698,8 @@
 					39 00 00 00 00 00 03 51 00 00
 					39 01 00 00 43 00 02 55 00
 					05 01 00 00 00 00 02 29 00];
+					qcom,mdss-dsi-timing-switch-command = [39 00 00 00 00 00 03 f0 5a 5a 39 00 00 00 00 00 03 fc 5a 5a 39 00 00 00 00 00 02 b0 23 39 00 00 00 00 00 02 d1 11 39 00 00 00 00 00 0c e9 11 55 a6 75 a3 a6 37 be 00 1a b8 39 00 00 00 00 00 03 f0 a5 a5 39 01 00 00 00 00 03 fc a5 a5];
+    qcom,mdss-dsi-timing-switch-command-state = "dsi_hs_mode";
 				qcom,mdss-dsi-off-command = [
 					05 01 00 00 00 00 02 28 00
 					05 01 00 00 78 00 02 10 00];
