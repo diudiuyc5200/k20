@@ -28,11 +28,6 @@ struct binder_ref_data;
 struct binder_thread;
 struct binder_transaction;
 
-#define BINDER_STR_MAX 128
-extern const char *const binder_command_strings[BINDER_STR_MAX];
-extern const char *const binder_return_strings[BINDER_STR_MAX];
-
-
 TRACE_EVENT(binder_ioctl,
 	TP_PROTO(unsigned int cmd, unsigned long arg),
 	TP_ARGS(cmd, arg),
@@ -391,11 +386,7 @@ TRACE_EVENT(binder_command,
 	TP_fast_assign(
 		__entry->cmd = cmd;
 	),
-	TP_printk("cmd=0x%x %s",
-		  __entry->cmd,
-		  _IOC_NR(__entry->cmd) < 128 ?
-			  binder_command_strings[_IOC_NR(__entry->cmd)] :
-			  "unknown")
+	TP_printk("cmd=0x%x", __entry->cmd)
 );
 
 TRACE_EVENT(binder_return,
@@ -407,11 +398,7 @@ TRACE_EVENT(binder_return,
 	TP_fast_assign(
 		__entry->cmd = cmd;
 	),
-	TP_printk("cmd=0x%x %s",
-		  __entry->cmd,
-		  _IOC_NR(__entry->cmd) < 128 ?
-			  binder_return_strings[_IOC_NR(__entry->cmd)] :
-			  "unknown")
+	TP_printk("cmd=0x%x", __entry->cmd)
 );
 
 #endif /* _BINDER_TRACE_H */
