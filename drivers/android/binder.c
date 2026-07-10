@@ -6331,7 +6331,7 @@ static void print_binder_proc(struct seq_file *m,
 		m->count = start_pos;
 }
 
-const char * const binder_return_strings[] = {
+static const char * const binder_return_strings[] = {
 	"BR_ERROR",
 	"BR_OK",
 	"BR_TRANSACTION",
@@ -6352,7 +6352,7 @@ const char * const binder_return_strings[] = {
 	"BR_FAILED_REPLY"
 };
 
-const char * const binder_command_strings[] = {
+static const char * const binder_command_strings[] = {
 	"BC_TRANSACTION",
 	"BC_REPLY",
 	"BC_ACQUIRE_RESULT",

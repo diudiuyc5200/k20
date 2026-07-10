@@ -31,6 +31,7 @@ struct binder_transaction;
 extern const char *const binder_command_strings[];
 extern const char *const binder_return_strings[];
 
+
 TRACE_EVENT(binder_ioctl,
 	TP_PROTO(unsigned int cmd, unsigned long arg),
 	TP_ARGS(cmd, arg),
