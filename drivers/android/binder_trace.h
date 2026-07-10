@@ -392,7 +392,7 @@ TRACE_EVENT(binder_command,
 	),
 	TP_printk("cmd=0x%x %s",
 		  __entry->cmd,
-		  _IOC_NR(__entry->cmd) < ARRAY_SIZE(binder_command_strings) ?
+		  _IOC_NR(__entry->cmd) < 128 ?
 			  binder_command_strings[_IOC_NR(__entry->cmd)] :
 			  "unknown")
 );
@@ -408,7 +408,7 @@ TRACE_EVENT(binder_return,
 	),
 	TP_printk("cmd=0x%x %s",
 		  __entry->cmd,
-		  _IOC_NR(__entry->cmd) < ARRAY_SIZE(binder_return_strings) ?
+		  _IOC_NR(__entry->cmd) < 128 ?
 			  binder_return_strings[_IOC_NR(__entry->cmd)] :
 			  "unknown")
 );
