@@ -28,8 +28,9 @@ struct binder_ref_data;
 struct binder_thread;
 struct binder_transaction;
 
-extern const char *const binder_command_strings[];
-extern const char *const binder_return_strings[];
+#define BINDER_STR_MAX 128
+extern const char *const binder_command_strings[BINDER_STR_MAX];
+extern const char *const binder_return_strings[BINDER_STR_MAX];
 
 
 TRACE_EVENT(binder_ioctl,

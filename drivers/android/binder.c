@@ -6351,6 +6351,7 @@ static const char * const binder_return_strings[] = {
 	"BR_CLEAR_DEATH_NOTIFICATION_DONE",
 	"BR_FAILED_REPLY"
 };
+EXPORT_SYMBOL_GPL(binder_return_strings);
 
 static const char * const binder_command_strings[] = {
 	"BC_TRANSACTION",
@@ -6373,6 +6374,7 @@ static const char * const binder_command_strings[] = {
 	"BC_TRANSACTION_SG",
 	"BC_REPLY_SG",
 };
+EXPORT_SYMBOL_GPL(binder_command_strings);
 
 static const char * const binder_objstat_strings[] = {
 	"proc",

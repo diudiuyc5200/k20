@@ -721,7 +721,7 @@ static ssize_t bcm_client_read(struct file *file,
 					act_ab = dual_ab;
 					act_ib = dual_ib;
 				}
-
+/*
 				trace_bus_bcm_client_status(
 					cur_bcm->node_info->name,
 					cur_node->lnode_list[j].cl_name,
@@ -735,6 +735,7 @@ static ssize_t bcm_client_read(struct file *file,
 					(unsigned long long)act_ib,
 					(unsigned long long)dual_ab,
 					(unsigned long long)dual_ib);
+					*/
 			}
 		}
 	}
@@ -773,6 +774,7 @@ static ssize_t msm_bus_dbg_dump_clients_read(struct file *file,
 		for (j = 0; j < cldata->pdata->usecase->num_paths; j++) {
 			if (cldata->index == -1)
 				continue;
+				/*
 			trace_bus_client_status(
 			cldata->pdata->name,
 			cldata->pdata->usecase[cldata->index].vectors[j].src,
@@ -780,6 +782,7 @@ static ssize_t msm_bus_dbg_dump_clients_read(struct file *file,
 			cldata->pdata->usecase[cldata->index].vectors[j].ab,
 			cldata->pdata->usecase[cldata->index].vectors[j].ib,
 			cldata->pdata->active_only);
+			*/
 		}
 	}
 	rt_mutex_unlock(&msm_bus_dbg_cllist_lock);
