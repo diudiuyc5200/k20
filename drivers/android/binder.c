@@ -86,7 +86,7 @@
 
 #include "binder_alloc.h"
 #include "binder_internal.h"
-#include "binder_trace.h"
+//#include "binder_trace.h"
 
 static HLIST_HEAD(binder_deferred_list);
 static DEFINE_MUTEX(binder_deferred_lock);
